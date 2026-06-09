@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://game-catalog-1vfu.onrender.com/sitemap.xml
