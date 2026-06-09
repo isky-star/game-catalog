@@ -7,27 +7,43 @@ const fs = require('fs');
 
 const app = express();
 
-// Создаем папки для данных и загрузок
+// Папки
 const dataDir = path.join(__dirname, 'data');
-const uploadDir = path.join(__dirname, 'public', 'uploads');
+const imagesDir = path.join(__dirname, 'public', 'images');
 if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+if (!fs.existsSync(imagesDir)) fs.mkdirSync(imagesDir, { recursive: true });
 
-// Файлы для хранения данных
+// Файлы данных
 const gamesFile = path.join(dataDir, 'games.json');
 const usersFile = path.join(dataDir, 'users.json');
 const cartsFile = path.join(dataDir, 'carts.json');
 const wishlistsFile = path.join(dataDir, 'wishlists.json');
 
-// Инициализация файлов с начальными данными
+// Функция для генерации имени файла из названия игры
+function getCoverImageFromTitle(title) {
+    if (!title) return '/images/game.jpg';
+    // Заменяем пробелы и опасные символы
+    let filename = title.replace(/[:\*\?\"<>\|]/g, '');
+    filename = filename.replace(/\s+/g, '_');
+    filename = filename + '.png';
+    
+    // Проверяем, существует ли файл (на сервере)
+    const filePath = path.join(imagesDir, filename);
+    if (fs.existsSync(filePath)) {
+        return '/images/' + filename;
+    }
+    return '/images/game.jpg';
+}
+
+// Инициализация данных
 if (!fs.existsSync(gamesFile)) {
     fs.writeFileSync(gamesFile, JSON.stringify([
-        { id: 1, title: 'Cyberpunk 2077', genre: 'RPG', release_year: 2020, developer: 'CD Projekt Red', publisher: 'CD Projekt', rating: 4.5, description: 'Откройте для себя историю Ви — наёмницы, борющейся за жизнь в огромном открытом мире Найт-Сити.', cover_image: '/images/game.jpg', created_at: new Date().toISOString() },
-        { id: 2, title: 'The Witcher 3: Wild Hunt', genre: 'RPG', release_year: 2015, developer: 'CD Projekt Red', publisher: 'CD Projekt', rating: 4.9, description: 'Станьте профессиональным охотником на монстров Геральтом из Ривии и исследуйте огромный открытый мир.', cover_image: '/images/game.jpg', created_at: new Date().toISOString() },
-        { id: 3, title: 'Minecraft', genre: 'Sandbox', release_year: 2011, developer: 'Mojang Studios', publisher: 'Microsoft Studios', rating: 4.8, description: 'Исследуйте, стройте и выживайте в бесконечном мире из кубиков.', cover_image: '/images/game.jpg', created_at: new Date().toISOString() },
-        { id: 4, title: 'Grand Theft Auto V', genre: 'Action', release_year: 2013, developer: 'Rockstar North', publisher: 'Rockstar Games', rating: 4.7, description: 'Три совершенно разных преступника борются за своё место в Лос-Сантосе.', cover_image: '/images/game.jpg', created_at: new Date().toISOString() },
-        { id: 5, title: 'Red Dead Redemption 2', genre: 'Action', release_year: 2018, developer: 'Rockstar Studios', publisher: 'Rockstar Games', rating: 4.8, description: 'Америка, 1899 год. Артур Морган и банда Датча ван дер Линде вынуждены бежать.', cover_image: '/images/game.jpg', created_at: new Date().toISOString() },
-        { id: 6, title: 'Elden Ring', genre: 'Action RPG', release_year: 2022, developer: 'FromSoftware', publisher: 'Bandai Namco', rating: 4.95, description: 'Сражайтесь в огромном фэнтезийном мире, созданном Хидэтакой Миядзаки и Джорджем Р.Р. Мартином.', cover_image: '/images/game.jpg', created_at: new Date().toISOString() }
+        { id: 1, title: 'Cyberpunk 2077', genre: 'RPG', release_year: 2020, developer: 'CD Projekt Red', publisher: 'CD Projekt', rating: 4.5, description: 'Откройте для себя историю Ви — наёмницы, борющейся за жизнь в огромном открытом мире Найт-Сити.', created_at: new Date().toISOString() },
+        { id: 2, title: 'The Witcher 3: Wild Hunt', genre: 'RPG', release_year: 2015, developer: 'CD Projekt Red', publisher: 'CD Projekt', rating: 4.9, description: 'Станьте профессиональным охотником на монстров Геральтом из Ривии и исследуйте огромный открытый мир.', created_at: new Date().toISOString() },
+        { id: 3, title: 'Minecraft', genre: 'Sandbox', release_year: 2011, developer: 'Mojang Studios', publisher: 'Microsoft Studios', rating: 4.8, description: 'Исследуйте, стройте и выживайте в бесконечном мире из кубиков.', created_at: new Date().toISOString() },
+        { id: 4, title: 'Grand Theft Auto V', genre: 'Action', release_year: 2013, developer: 'Rockstar North', publisher: 'Rockstar Games', rating: 4.7, description: 'Три совершенно разных преступника борются за своё место в Лос-Сантосе.', created_at: new Date().toISOString() },
+        { id: 5, title: 'Red Dead Redemption 2', genre: 'Action', release_year: 2018, developer: 'Rockstar Studios', publisher: 'Rockstar Games', rating: 4.8, description: 'Америка, 1899 год. Артур Морган и банда Датча ван дер Линде вынуждены бежать.', created_at: new Date().toISOString() },
+        { id: 6, title: 'Elden Ring', genre: 'Action RPG', release_year: 2022, developer: 'FromSoftware', publisher: 'Bandai Namco', rating: 4.95, description: 'Сражайтесь в огромном фэнтезийном мире, созданном Хидэтакой Миядзаки и Джорджем Р.Р. Мартином.', created_at: new Date().toISOString() }
     ], null, 2));
 }
 
@@ -40,7 +56,7 @@ if (!fs.existsSync(usersFile)) {
 if (!fs.existsSync(cartsFile)) fs.writeFileSync(cartsFile, JSON.stringify({}));
 if (!fs.existsSync(wishlistsFile)) fs.writeFileSync(wishlistsFile, JSON.stringify({}));
 
-// Функции для работы с JSON файлами
+// Функции для работы с JSON
 function readJSON(file) {
     return JSON.parse(fs.readFileSync(file));
 }
@@ -48,10 +64,15 @@ function writeJSON(file, data) {
     fs.writeFileSync(file, JSON.stringify(data, null, 2));
 }
 
-// Настройка multer для фото
+// Настройка multer для загрузки фото (сохраняем в images)
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, uploadDir),
-    filename: (req, file, cb) => cb(null, Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(file.originalname))
+    destination: (req, file, cb) => cb(null, imagesDir),
+    filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname);
+        const basename = path.basename(file.originalname, ext);
+        const safeName = basename.replace(/[:\*\?\"<>\|]/g, '').replace(/\s+/g, '_');
+        cb(null, safeName + '.png');
+    }
 });
 const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
 
@@ -131,9 +152,14 @@ app.post('/api/logout', (req, res) => {
     res.json({ message: 'Выход выполнен' });
 });
 
-// Получить все игры
+// Получить все игры (с автоматическим добавлением cover_image)
 app.get('/api/games', (req, res) => {
-    const games = readJSON(gamesFile);
+    let games = readJSON(gamesFile);
+    // Добавляем cover_image к каждой игре на основе названия
+    games = games.map(game => ({
+        ...game,
+        cover_image: getCoverImageFromTitle(game.title)
+    }));
     res.json(games);
 });
 
@@ -145,8 +171,10 @@ app.post('/api/games', isAuthenticated, isAdmin, upload.single('cover_image'), (
     const games = readJSON(gamesFile);
     const newId = games.length > 0 ? Math.max(...games.map(g => g.id)) + 1 : 1;
     
-    let cover_image = null;
-    if (req.file) cover_image = '/uploads/' + req.file.filename;
+    // Если загружено фото — сохраняем
+    if (req.file) {
+        console.log('Фото загружено:', req.file.filename);
+    }
     
     const newGame = {
         id: newId,
@@ -157,7 +185,6 @@ app.post('/api/games', isAuthenticated, isAdmin, upload.single('cover_image'), (
         publisher: publisher || null,
         rating: rating || 0,
         description: description || null,
-        cover_image: cover_image || '/images/game.jpg',
         created_at: new Date().toISOString()
     };
     games.push(newGame);
@@ -175,9 +202,6 @@ app.post('/api/games/:id', isAuthenticated, isAdmin, upload.single('cover_image'
     const index = games.findIndex(g => g.id === gameId);
     if (index === -1) return res.status(404).json({ error: 'Игра не найдена' });
     
-    let cover_image = games[index].cover_image;
-    if (req.file) cover_image = '/uploads/' + req.file.filename;
-    
     games[index] = {
         ...games[index],
         title,
@@ -186,8 +210,7 @@ app.post('/api/games/:id', isAuthenticated, isAdmin, upload.single('cover_image'
         developer: developer || null,
         publisher: publisher || null,
         rating: rating || 0,
-        description: description || null,
-        cover_image
+        description: description || null
     };
     writeJSON(gamesFile, games);
     res.json({ message: 'Игра обновлена' });
@@ -264,5 +287,6 @@ const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`🌐 Сервер запущен: http://localhost:3000`);
     console.log(`📁 Данные хранятся в папке: ${dataDir}`);
+    console.log(`🖼️ Фото в папке: ${imagesDir}`);
     console.log(`👤 Админ: admin / admin123`);
 });
