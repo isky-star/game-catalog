@@ -12,7 +12,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://game-catalog-1vfu.onrender.com/">
   <meta name="twitter:card" content="summary_large_image">
-    <title>PlayZone - Игровой магазин | Купить игры PS5, Xbox, PC</title>
+  <title>PlayZone - Игровой магазин | Купить игры PS5, Xbox, PC</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&amp;family=Nunito:wght@400;600;700&amp;display=swap" rel="stylesheet">
@@ -104,7 +104,7 @@
   </div>
   <div class="fixed inset-0 z-[55] bg-black/60 hidden" id="mobile-overlay" onclick="toggleMobileMenu()"></div>
 
-  <!-- Hero Banner (убрано содержимое) -->
+  <!-- Hero Banner -->
   <section class="relative" style="background: linear-gradient(135deg, #1a1040 0%, #0f1117 50%, #0a1628 100%);">
     <div class="relative z-10 max-w-7xl mx-auto px-4 py-16 md:py-24">
       <div class="text-center">
@@ -274,18 +274,25 @@
 
   <!-- Game Detail Modal -->
   <div class="fixed inset-0 z-[200] bg-black/70 hidden flex items-center justify-center p-4" id="detail-modal" onclick="if(event.target === this) closeDetailModal()">
-    <div class="bg-gray-900 rounded-2xl p-8 max-w-2xl w-full" style="background-color: #1a1d27; border: 1px solid rgba(255,255,255,0.08);">
+    <div class="bg-gray-900 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto" style="background-color: #1a1d27; border: 1px solid rgba(255,255,255,0.08);">
       <div class="flex justify-between items-center mb-6">
         <h2 class="font-heading font-bold text-2xl" id="detail-title" style="color: #e2e8f0;"></h2>
         <button onclick="closeDetailModal()" class="p-2 rounded-lg hover:bg-white/5"><i data-lucide="x" style="width:22px;height:22px;color:#94a3b8;"></i></button>
       </div>
       <div class="space-y-4">
+        <div class="flex justify-center">
+          <img id="detail-cover" src="/images/game.jpg" alt="Обложка игры" class="rounded-xl max-h-48 object-cover" style="border: 1px solid rgba(255,255,255,0.1);" onerror="this.src='/images/game.jpg'">
+        </div>
         <div><span class="font-semibold" style="color: #a78bfa;">Жанр:</span> <span id="detail-genre" style="color: #e2e8f0;"></span></div>
         <div><span class="font-semibold" style="color: #a78bfa;">Год выпуска:</span> <span id="detail-year" style="color: #e2e8f0;"></span></div>
         <div><span class="font-semibold" style="color: #a78bfa;">Разработчик:</span> <span id="detail-developer" style="color: #e2e8f0;"></span></div>
         <div><span class="font-semibold" style="color: #a78bfa;">Издатель:</span> <span id="detail-publisher" style="color: #e2e8f0;"></span></div>
         <div><span class="font-semibold" style="color: #a78bfa;">Рейтинг:</span> <span id="detail-rating" style="color: #e2e8f0;"></span></div>
         <div><span class="font-semibold" style="color: #a78bfa;">Описание:</span> <p id="detail-description" style="color: #e2e8f0; margin-top: 5px;"></p></div>
+        <div class="flex gap-3 pt-4">
+          <button id="detail-cart-btn" class="flex-1 py-3 rounded-xl font-bold text-sm transition-all hover:scale-105" style="background-color: #10b981; color: #fff;"><i data-lucide="shopping-cart" style="width:16px;height:16px;display:inline;margin-right:8px;"></i> В корзину</button>
+          <button id="detail-wishlist-btn" class="flex-1 py-3 rounded-xl font-bold text-sm transition-all hover:scale-105" style="background-color: rgba(255,255,255,0.1); color: #fff;"><i data-lucide="heart" style="width:16px;height:16px;display:inline;margin-right:8px;"></i> В желаемое</button>
+        </div>
       </div>
     </div>
   </div>
@@ -402,12 +409,27 @@
     if (!game) return;
     
     document.getElementById('detail-title').textContent = game.title;
+    document.getElementById('detail-cover').src = game.cover_image || '/images/game.jpg';
     document.getElementById('detail-genre').textContent = game.genre || 'Не указан';
     document.getElementById('detail-year').textContent = game.release_year || 'Не указан';
     document.getElementById('detail-developer').textContent = game.developer || 'Не указан';
     document.getElementById('detail-publisher').textContent = game.publisher || 'Не указан';
     document.getElementById('detail-rating').textContent = game.rating || '0.00';
     document.getElementById('detail-description').textContent = game.description || 'Нет описания';
+    
+    const cartBtn = document.getElementById('detail-cart-btn');
+    const wishlistBtn = document.getElementById('detail-wishlist-btn');
+    
+    cartBtn.onclick = (e) => {
+        e.stopPropagation();
+        addToCart(game.id);
+        closeDetailModal();
+    };
+    wishlistBtn.onclick = (e) => {
+        e.stopPropagation();
+        addToWishlist(game.id);
+        closeDetailModal();
+    };
     
     document.getElementById('detail-modal').classList.remove('hidden');
     lucide.createIcons();

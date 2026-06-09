@@ -1,0 +1,62 @@
+<!doctype html><html lang="ru" prefix="og: http://ogp.me/ns#"><head><meta charset="UTF-8"/><meta id="viewport" name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no"/><title>Медиа | VK Play Media</title><meta name="theme-color" content="#000000"/><meta name="MobileOptimized" content="320"/><meta name="HandheldFriendly" content="true"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/><link rel="apple-touch-icon" sizes="57x57" href="https://vkplay.ru/hotbox/favicon/android-chrome-57x57.png" data-react-helmet="true"/><link rel="apple-touch-icon" sizes="76x76" href="https://vkplay.ru/hotbox/favicon/android-chrome-76x76.png" data-react-helmet="true"/><link rel="apple-touch-icon" sizes="128x128" href="https://vkplay.ru/hotbox/favicon/android-chrome-128x128.png" data-react-helmet="true"/><link rel="apple-touch-icon" sizes="152x152" href="https://vkplay.ru/hotbox/favicon/android-chrome-152x152.png" data-react-helmet="true"/><link rel="apple-touch-icon" sizes="167x167" href="https://vkplay.ru/hotbox/favicon/android-chrome-167x167.png" data-react-helmet="true"/><link rel="apple-touch-icon" sizes="180x180" href="https://vkplay.ru/hotbox/favicon/android-chrome-180x180.png" data-react-helmet="true"/><link rel="shortcut icon" type="image/png" sizes="192x192" href="https://vkplay.ru/hotbox/favicon/android-chrome-192x192.png" data-react-helmet="true"/><link rel="shortcut icon" type="image/png" sizes="128x128" href="https://vkplay.ru/hotbox/favicon/android-chrome-128x128.png" data-react-helmet="true"/><link rel="icon" href="https://vkplay.ru/hotbox/favicon/favicon.svg" sizes="any" type="image/svg+xml" data-react-helmet="true"><link rel="shortcut icon" href="https://vkplay.ru/hotbox/favicon/favicon.svg" sizes="any" type="image/svg+xml" data-react-helmet="true"><meta property="og:site_name" content="Медиа | VK Play" data-react-helmet="true"/><link rel="image_src" href="https://vkplay.ru/pre_0x736_resize/hotbox/images/vk_600x600.png?quality=85&amp;format=jpeg" data-react-helmet="true"><link rel="preload" href="/hotbox/content/frontend/static/fonts/vksans/VK-Sans-Display-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="preload" href="/hotbox/content/frontend/static/fonts/vksans/VK-Sans-Display-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><script defer="defer" src="https://vkplay.ru/hotbox/feedback/feedback-nps.js"></script><script>window.isVKP = true;
+        window.isMyGamesApp = window.navigator.userAgent.includes('com.my.mygamesapp') || window.location.search.includes('is_mygames_app') || false;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            if (window.isMyGamesApp) {
+                document.getElementsByClassName('mock-header')[0].style.display = 'none';
+            }
+        });
+
+        // (function (i, s, o, g, r, a, m) {
+        //     i['GoogleAnalyticsObject'] = r;
+        //     (i[r] =
+        //         i[r] ||
+        //         function () {
+        //         (i[r].q = i[r].q || []).push(arguments);
+        //         }),
+        //         (i[r].l = 1 * new Date());
+        //     (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+        //     a.async = 1;
+        //     a.src = g;
+        //     m.parentNode.insertBefore(a, m);
+        // })(
+        //     window,
+        //     document,
+        //     'script',
+        //     'https://www.google-analytics.com/analytics.js',
+        //     'ga'
+        // );
+
+        // ga('create', 'UA-21863460-1', 'auto', { allowLinker: true });
+        // ga('require', 'linker');
+        // ga('linker:autoLink', ['games.mail.ru', 'm.games.mail.ru']);
+        // ga('require', 'displayfeatures');
+        // ga('set', 'dimension3', '0');
+        // ga('set', 'dimension7', (document.referrer.includes('store.my.games/play/game/') || document.referrer.includes('store.my.games/gamecenter/game/')) ? 'store' : 'other');</script><style>body {
+            margin: 0;
+            background: #000;
+        }
+
+        .mock-layout {
+            position: relative
+        }
+
+        .mock-header {
+            background: rgba(216, 216, 216, .14);
+            height: 66px;
+            position: relative;
+        }
+
+        @media screen and (max-width:768px) {
+            .mock-header {
+                height: 64px;
+                background: #242429;
+            }
+        }</style><script defer="defer" src="/hotbox/content/frontend/release/main-vkp.28fdfa7e49dd78bc8147.js"></script><link href="/hotbox/content/frontend/release/main-vkp.fc7e3ae30fd7f7b2e2ef.css" rel="stylesheet"></head><body data-theme="dark" data-project="vkp"><div id="app-body"><div class="mock-layout"><div class="mock-header"></div></div></div><div id="modal-root"></div><script>window.isPrerenderReady = false;
+        window.withAppShell = true;
+
+        if (withAppShell) {
+            const mockHeader = document.getElementsByClassName('mock-header')[0];
+
+            mockHeader.style.display = "none";
+        }</script><noscript>Для корректной работы портала включите JavaScript в настройках вашего браузера.</noscript></body></html>
